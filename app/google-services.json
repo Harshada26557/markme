@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "760349269568",
+    "project_id": "markme-935e4",
+    "storage_bucket": "markme-935e4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760349269568:android:830f4b07383b8d21c549a5",
+        "android_client_info": {
+          "package_name": "com.example.markme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5fhb2aJSEFAsAQvdw4ooj09lNGaaKICc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

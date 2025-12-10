@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background_xml"
+        tools:context=".first_activity">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark me"
+            android:textSize="50dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your attendance is your\n commitment to your future."
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="25dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/student_card"
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="login as student"
+                    android:layout_marginTop="130dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/graduation"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="30dp"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/teacher_card"
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="login as teacher"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="130dp"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/openbook"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="30dp"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="60dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/admin_card"
+                android:layout_width="250dp"
+                android:layout_height="180dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="login as admin"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="130dp"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="15dp"/>
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/admin"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="30dp"/>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\n\n\n\n\n\n"/>
+    </LinearLayout>
+
+</ScrollView>
