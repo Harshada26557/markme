@@ -9,7 +9,7 @@
     android:gravity="center_horizontal"
     android:padding="20dp"
     android:background="@drawable/background_xml"
-    tools:context=".adminpage">
+    tools:context=".admin_register">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,27 +25,30 @@
             android:drawablePadding="8dp"
             android:text="Back"
             android:textSize="18sp"
-            android:layout_marginRight="160dp"
+            android:layout_marginRight="180dp"
             android:textColor="#000000"
             android:padding="10dp"
             android:clickable="true"
             android:focusable="true" />
 
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/logo" />
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/login" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:hint="Enter Name" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,9 +62,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:hint="Please enter email" />
+            android:hint="Enter email" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/position_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:hint="Enter subject" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:boxBackgroundMode="filled">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mono_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:hint="Enter Phone Number" />
+    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,25 +109,17 @@
             android:hint="Password" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
+
     <Button
-        android:id="@+id/login_"
+        android:id="@+id/register_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:backgroundTint="#FFC107"
         android:textColor="@color/black"
-        android:text="Login" />
+        android:text="Save" />
 
-
-    <TextView
-        android:id="@+id/register_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="New User? Register here"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:clickable="true" />
 
 
 </LinearLayout>

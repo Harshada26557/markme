@@ -13,17 +13,26 @@
         android:layout_marginTop="30dp"
         android:padding="16dp">
 
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#283593"
+            android:padding="16dp"
+            app:titleTextColor="@android:color/white">
+
 <ImageView
     android:id="@+id/user_prof"
     android:layout_width="50dp"
     android:layout_height="50dp"
     android:layout_marginBottom="20dp"
     android:src="@drawable/user"/>
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:layout_weight="1"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="15dp"
             app:cardElevation="8dp">
