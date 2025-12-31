@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class adduser_for_admin extends AppCompatActivity {
@@ -16,8 +17,6 @@ public class adduser_for_admin extends AppCompatActivity {
     TextInputEditText email, name, subject, phone, password;
     Button savebtn;
     TextView backText;
-
-    private String teacherId = null; // stores UID for edit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +31,11 @@ public class adduser_for_admin extends AppCompatActivity {
         savebtn = findViewById(R.id.register_);
         backText = findViewById(R.id.txt_back);
 
-        // Check if this is an edit operation
-        teacherId = getIntent().getStringExtra("id");
-        if (teacherId != null) {
-            name.setText(getIntent().getStringExtra("name"));
-            email.setText(getIntent().getStringExtra("email"));
-            subject.setText(getIntent().getStringExtra("subject"));
-            phone.setText(getIntent().getStringExtra("phone"));
-            password.setText(getIntent().getStringExtra("password"));
-        }
-
-        savebtn.setOnClickListener(v -> saveUser());
         backText.setOnClickListener(v -> finish());
+        savebtn.setOnClickListener(v -> saveTeacher());
     }
 
-    private void saveUser() {
+    private void saveTeacher() {
         String userName = name.getText().toString().trim();
         String userEmail = email.getText().toString().trim();
         String userSubject = subject.getText().toString().trim();
@@ -57,30 +46,56 @@ public class adduser_for_admin extends AppCompatActivity {
         if (userEmail.isEmpty()) { email.setError("Email required"); return; }
         if (userSubject.isEmpty()) { subject.setError("Subject required"); return; }
         if (userPhone.isEmpty()) { phone.setError("Phone required"); return; }
+        if (userPassword.isEmpty()) { password.setError("Password required"); return; }
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        String adminId = auth.getCurrentUser().getUid();
 
-        auth.createUserWithEmailAndPassword(userEmail,userPassword)
+        // Create teacher account in Firebase Auth
+        auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnSuccessListener(authResult -> {
-                    String uid = authResult.getUser().getUid();
-                    MODEL user = new MODEL(userName, userEmail, userSubject, userPhone, userPassword);
-                    user.id = uid;
+                    String teacherUid = authResult.getUser().getUid();
 
-                    FirebaseDatabase.getInstance()
+                    MODEL teacher = new MODEL(userName, userEmail, userSubject, userPhone, userPassword);
+                    teacher.id = teacherUid;
+
+                    // 1️⃣ Save teacher profile under /Users/Teachers/<teacherUid>
+                    DatabaseReference teacherRef = FirebaseDatabase.getInstance()
                             .getReference("Users")
                             .child("Teachers")
-                            .child("uid")
-                            .setValue(user)
+                            .child(teacherUid);
+
+                    teacherRef.setValue(teacher)
                             .addOnSuccessListener(unused -> {
-                                Toast.makeText(this, "Teacher added successfully", Toast.LENGTH_SHORT).show();
-                                finish();
+                                // 2️⃣ Link teacher under admin for announcements
+                                DatabaseReference adminTeacherRef = FirebaseDatabase.getInstance()
+                                        .getReference("Users")
+                                        .child("Admins")
+                                        .child(adminId)
+                                        .child("Teachers")
+                                        .child(teacherUid);
+
+                                adminTeacherRef.setValue(true)
+                                        .addOnSuccessListener(aVoid ->
+                                                Toast.makeText(this,
+                                                        "Teacher added successfully",
+                                                        Toast.LENGTH_SHORT).show())
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(this,
+                                                        e.getMessage(),
+                                                        Toast.LENGTH_LONG).show());
                             })
-
                             .addOnFailureListener(e ->
-                                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show()
-
-                            );
+                                    Toast.makeText(this,
+                                            e.getMessage(),
+                                            Toast.LENGTH_LONG).show());
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    if(e.getMessage().contains("already in use")) {
+                        Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

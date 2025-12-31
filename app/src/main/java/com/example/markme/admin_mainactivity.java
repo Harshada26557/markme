@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,8 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 public class admin_mainactivity extends AppCompatActivity {
 
     ImageView addUserImage;
-    TextView teacherCount;
+    TextView teacherCount,calender,announcement;
     CardView teacherCard, studentCard, percentageCard;
+
+    String adminId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,18 @@ public class admin_mainactivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_mainactivity);
 
-        // Initialize views
+
         addUserImage = findViewById(R.id.add_user);
-        teacherCount = findViewById(R.id.txtTeacherCount); // Updated to match the TextView ID in your layout
+        teacherCount = findViewById(R.id.txtTeacherCount);
         teacherCard = findViewById(R.id.teachers_);
-        studentCard = findViewById(R.id.card_attendance); // replace with actual ID
-        percentageCard = findViewById(R.id.card_homework); // replace with actual ID
+        studentCard = findViewById(R.id.card_attendance);
+        percentageCard = findViewById(R.id.card_homework);
+        calender = findViewById(R.id._calender);
+        announcement = findViewById(R.id.announce_admin);
 
+        adminId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        addUserImage.setOnClickListener(v ->
+      addUserImage.setOnClickListener(v ->
                 startActivity(new Intent(admin_mainactivity.this, adduser_for_admin.class))
         );
 
@@ -44,16 +50,24 @@ public class admin_mainactivity extends AppCompatActivity {
         teacherCard.setOnClickListener(v ->
                 startActivity(new Intent(admin_mainactivity.this, saved_teachers.class))
         );
+        calender.setOnClickListener(v ->
+                startActivity(new Intent(admin_mainactivity.this, calender.class))
+        );
+        announcement.setOnClickListener(v ->
+                startActivity(new Intent(admin_mainactivity.this, admin_announcement.class))
+        );
 
 
         FirebaseDatabase.getInstance()
-                .getReference("Users") // Make sure this matches your database path
+                .getReference("Users")
+                .child("Admins")
+                .child(adminId)
                 .child("Teachers")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         long count = snapshot.getChildrenCount();
-                        teacherCount.setText(String.valueOf(count)); // Update TextView with actual count
+                        teacherCount.setText(String.valueOf(count));
                     }
 
                     @Override

@@ -8,7 +8,6 @@
 
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,12 +21,7 @@
             app:title="Teacher Dashboard"
             app:titleTextColor="@android:color/white">
 
-            <ImageView
-                android:id="@+id/btn_logout"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:src="@drawable/logout" />
+
         </androidx.appcompat.widget.Toolbar>
 
 
@@ -78,7 +72,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Stats -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -217,13 +211,19 @@
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="View Attendance"
+                    android:text="View Attendance Record"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginStart="16dp"
                     android:textColor="@color/black"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/admin_anouncement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="see the updates of admin"/>
 
     </LinearLayout>
 </ScrollView>
