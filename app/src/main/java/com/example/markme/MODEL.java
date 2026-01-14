@@ -1,4 +1,5 @@
 package com.example.markme;
+
 public class MODEL {
 
     public String id;
@@ -6,16 +7,17 @@ public class MODEL {
     public String email;
     public String subject;
     public String phone;
-    public String password;
-
+    public String role;
+    public String adminId;
 
     public MODEL() {}
 
-    public MODEL(String name, String email, String subject, String phone, String password) {
+    public MODEL(String name, String email, String subject, String phone, String role, String adminId) {
         this.name = name;
         this.email = email;
         this.subject = subject;
         this.phone = phone;
-        this.password = password;
+        this.role = role;
+        this.adminId = adminId;
     }
 }

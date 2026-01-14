@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
@@ -43,47 +44,47 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
         h.subject.setText(t.subject);
         h.phone.setText(t.phone);
 
-
-        // EDIT
+        // 🔄 EDIT TEACHER
         h.edit.setOnClickListener(v -> {
             Intent i = new Intent(context, adduser_for_admin.class);
-            i.putExtra("id", t.id);           // existing id
+            i.putExtra("key", t.id); // Firebase key
             i.putExtra("name", t.name);
             i.putExtra("email", t.email);
             i.putExtra("subject", t.subject);
             i.putExtra("phone", t.phone);
-            i.putExtra("password", t.password); // pass the password too
             context.startActivity(i);
         });
 
+        // Delete teacher
         h.delete.setOnClickListener(v -> {
+            int pos = h.getAdapterPosition();
+            if (pos == RecyclerView.NO_POSITION) return;
+
             FirebaseDatabase.getInstance()
-                    .getReference("Users")
-                    .child("Teachers")
+                    .getReference("AllowedTeachers")
                     .child(t.id)
                     .removeValue()
                     .addOnSuccessListener(unused -> {
-                        // Remove item from list and notify adapter
-                        int adapterPosition = h.getAdapterPosition();
-                        list.remove(position);
-                        notifyItemRemoved(position);
-
-                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                        list.remove(pos);
+                        notifyItemRemoved(pos);
+                        Toast.makeText(context,
+                                "Teacher deleted", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e ->
-                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show()
+                            Toast.makeText(context,
+                                    e.getMessage(), Toast.LENGTH_LONG).show()
                     );
         });
     }
 
 
-        @Override
+    @Override
     public int getItemCount() {
         return list.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, email, subject, phone,password;
+        TextView name, email, subject, phone;
         Button edit, delete;
 
         ViewHolder(View v) {
@@ -94,7 +95,6 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.ViewHold
             phone = v.findViewById(R.id.txtPhone);
             edit = v.findViewById(R.id.btnEdit);
             delete = v.findViewById(R.id.btnDelete);
-            password= v.findViewById(R.id.pass_);
         }
     }
 }

@@ -101,6 +101,7 @@ public class admin_register extends AppCompatActivity {
                         Intent intent = new Intent(
                                 admin_register.this,
                                 admin_mainactivity.class
+
                         );
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);

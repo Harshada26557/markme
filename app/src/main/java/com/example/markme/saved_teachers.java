@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -35,33 +36,45 @@ public class saved_teachers extends AppCompatActivity {
         adapter = new TeacherAdapter(this, teacherList);
         recyclerView.setAdapter(adapter);
 
-        fetchTeachers();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            fetchTeachers();
+        } else {
+            Toast.makeText(this, "You must be logged in", Toast.LENGTH_LONG).show();
+        }
     }
-
     private void fetchTeachers() {
+
         FirebaseDatabase.getInstance()
-                .getReference("Users")
-                .child("Teachers")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .getReference("AllowedTeachers")
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         teacherList.clear();
-                        for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                            MODEL user = userSnapshot.getValue(MODEL.class);
-                            if (user != null) {
-                                user.id = userSnapshot.getKey(); // assign Firebase key as id
-                                teacherList.add(user);
+
+                        if (snapshot.exists()) {
+                            for (DataSnapshot tSnap : snapshot.getChildren()) {
+
+                                MODEL t = tSnap.getValue(MODEL.class);
+                                if (t != null) {
+                                    t.id = tSnap.getKey(); // emailKey
+                                    teacherList.add(t);
+                                }
                             }
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(saved_teachers.this,
+                                    "No teachers found",
+                                    Toast.LENGTH_SHORT).show();
                         }
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onCancelled(DatabaseError error) {
                         Toast.makeText(saved_teachers.this,
-                                error.getMessage(),
+                                "Error: " + error.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 });
     }
+
 }
